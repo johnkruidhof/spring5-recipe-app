@@ -1,30 +1,32 @@
 package guru.springframework.domain;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Data
+/**
+ * Created by jt on 6/13/17.
+ */
+@Getter
+@Setter
 @EqualsAndHashCode(exclude = {"recipe"})
-@ToString(exclude = {"recipe"})
 @Entity
 public class Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String description;
     private BigDecimal amount;
 
-    @ManyToOne
-    private Recipe recipe;
-
-    // FetchType is ter illustratie gezet. EAGER is de default
     @OneToOne(fetch = FetchType.EAGER)
     private UnitOfMeasure uom;
 
+    @ManyToOne
+    private Recipe recipe;
 
     public Ingredient() {
     }
